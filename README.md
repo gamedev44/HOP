@@ -1,7 +1,8 @@
 # 👋 Welcome all Dev's!
 This project contains the foundation for **HØP** - A Discord Alternative, created by **Asterisk**.
 
-I’ve created this browser-based application to address the ongoing concerns with Discord's increasing costs, questionable user privacy practices, and overall management. If you believe in making a change, you have the power—and the obligation—to do so. That's why I, **Asterisk**, have developed **HOP**.
+I’ve created this application to address the ongoing concerns with Discord's increasing costs, questionable user privacy practices, and overall management. If you believe in making a change, and you have the power then you have the obligation to do so. 
+That's why I, **Asterisk**, have started to further develop **HØP**. ive already made a very simple yet crude proof of [Concept Web Version](https://hop-socialize.w3spaces.com/) to the Real Deal fullstack application.
 
 ## Key Features
 
