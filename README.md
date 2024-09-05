@@ -35,9 +35,10 @@ I’ve created this browser-based application to address the ongoing concerns wi
 **Database:**
 - tadpole-db (built atop of neon-db)
 
-## Contribution
-
-We welcome contributions from the community! Before contributing, please review our [Contribution Guidelines](./Contributing.md) to get started.
+## Contact Me for Collab or Contributions.
+- **Asterisk (Developer)**
+- GitHub: [https://github.com/gamedev44](https://github.com/gamedev44)
+- Email: [herrell4@gmail.com](mailto:herrell4@gmail.com)
 
 ## Local Development
 
@@ -161,3 +162,7 @@ For deployment, use services like **Railway**, **Digital Ocean**, **AWS**, **Goo
 - **Leap of Faith**: Video call feature.
 
 ### feel free to leave notes in the issue or in our github link above regarding any new features or changes you might like to see incorperated.
+
+### Please Consider Donating!
+[Send Donations](https://www.patreon.com/iu_pgd/membership) to boost our platform and take all of our projects to the next level; we ask that you please help by donating towards our cause if it's not too much to ask.
+
