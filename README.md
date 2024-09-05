@@ -65,10 +65,10 @@ github cli
 gh repo clone gamedev44/HOP
 ```
 
-Navigate to the Hop directory:
+Navigate to the Hop directory: Note: (modify this to your need enable to run the server this should be where the HOP\HOP\App\HOP Folder is.)
 
 ```sh
-cd main-folder\HOP\HOP\App\HOP # modify this to your need enable to run the server this should be where the HOP\HOP\App\HOP Folder is.
+cd main-folder\HOP\HOP\App\HOP 
 ```
 
 ### Install Dependencies
