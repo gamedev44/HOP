@@ -20,7 +20,7 @@ export const UserList: React.FC = () => {
 
   if (activeTab === 'settings') {
     return (
-      <div className="w-60 bg-[#2f3136] p-4">
+      <div className="w-60 bg-[#2f3136] p-4 scrollbar-none">
         <h3 className="text-gray-400 uppercase text-xs font-semibold mb-4">Settings</h3>
         <div className="space-y-2">
           <button className="w-full text-left text-gray-300 hover:bg-[#36393f] p-2 rounded">
@@ -41,12 +41,12 @@ export const UserList: React.FC = () => {
   }
 
   return (
-    <div className="w-60 bg-[#2f3136] p-4">
+    <div className="w-60 bg-[#2f3136] p-4 scrollbar-none">
       <h3 className="text-gray-400 uppercase text-xs font-semibold mb-4">
         Online — {onlineUsers.length}
       </h3>
       
-      <div className="space-y-2">
+      <div className="space-y-2 scrollbar-none">
         {onlineUsers.map((user) => (
           <div
             key={user.id}
@@ -74,7 +74,7 @@ export const UserList: React.FC = () => {
         Offline — {offlineUsers.length}
       </h3>
       
-      <div className="space-y-2">
+      <div className="space-y-2 scrollbar-none">
         {offlineUsers.map((user) => (
           <div
             key={user.id}
@@ -95,3 +95,4 @@ export const UserList: React.FC = () => {
     </div>
   );
 };
+

@@ -40,18 +40,25 @@ const validCredentials = [
   { username: "Wolfie", password: "wlf4" },
   { username: "Hamza", password: "4042" },
   { username: "Techno", password: "Wambo" },
-  { username: "Trident", password: "Horizon" }
+  { username: "Trident", password: "Horizon" },
+  { username: "Techy", password: "SnackOps" },
 ];
 
+
+import type { UserStatus } from '../types';
 
 const defaultUsers: User[] = validCredentials.map(cred => ({
   id: Math.random().toString(36).substring(2),
   name: cred.username,
   isOnline: false,
-  status: 'offline',
+  status: 'offline' as UserStatus,
   customStatus: '',
   badges: []
 }));
+
+
+
+
 
 const defaultServer: Server = {
   id: '1',
@@ -110,6 +117,7 @@ export const useStore = create<Store>((set, get) => ({
   isAuthenticated: false,
   activeTab: 'servers',
   friendsTab: 'all',
+
 
   setActiveTab: (tab) => set({ activeTab: tab }),
   setFriendsTab: (tab) => set({ friendsTab: tab }),
@@ -212,11 +220,11 @@ export const useStore = create<Store>((set, get) => ({
     set({
       currentUser: null,
       isAuthenticated: false,
-      users: defaultUsers.map(u => ({ ...u, isOnline: false, status: 'offline' })),
+      users: defaultUsers.map(u => ({ ...u, isOnline: false, status: 'offline' as UserStatus })),
       currentServer: null,
       currentChannel: null,
       activeTab: 'servers',
       friendsTab: 'all'
     });
   }
-}));
+}))
