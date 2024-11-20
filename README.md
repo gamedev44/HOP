@@ -1,6 +1,3 @@
-Here's an updated and expanded version of your `README.md` with the requested information integrated:
-
-```markdown
 # 👋 Welcome all Devs!
 
 This project contains the foundation for **HØP** - A Discord Alternative, created by **Asterisk**.
