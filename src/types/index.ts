@@ -11,6 +11,8 @@ export interface User {
   avatarUrl?: string;
   customStatus?: string;
   badges?: string[];
+  leapPlus?: boolean;
+  roles?: string[];
 }
 
 export interface Category {
@@ -19,6 +21,7 @@ export interface Category {
   serverId: string;
   isPrivate: boolean;
   channels: Channel[];
+  permissions?: CategoryPermissions;
 }
 
 export interface Channel {
@@ -31,6 +34,9 @@ export interface Channel {
   topic?: string;
   slowMode?: number;
   userLimit?: number;
+  permissions?: ChannelPermissions;
+  lastMessage?: Message;
+  pinnedMessages?: Message[];
 }
 
 export interface Server {
@@ -47,6 +53,10 @@ export interface Server {
   emojis: CustomEmoji[];
   boosts: number;
   features: string[];
+  permissions?: ServerPermissions;
+  invites?: ServerInvite[];
+  verificationLevel?: 'none' | 'low' | 'medium' | 'high' | 'highest';
+  moderationSettings?: ModerationSettings;
 }
 
 export interface Role {
@@ -56,6 +66,7 @@ export interface Role {
   position: number;
   permissions: string[];
   mentionable: boolean;
+  hoist: boolean;
 }
 
 export interface CustomEmoji {
@@ -63,6 +74,7 @@ export interface CustomEmoji {
   name: string;
   url: string;
   animated: boolean;
+  creator?: string;
 }
 
 export interface Message {
@@ -78,6 +90,7 @@ export interface Message {
   reactions?: MessageReaction[];
   mentions?: string[];
   replyTo?: string;
+  isPinned?: boolean;
 }
 
 export interface MessageEmbed {
@@ -99,4 +112,69 @@ export interface MessageReaction {
 export interface PeerConnection {
   peerId: string;
   connection: SimplePeer.Instance;
+}
+
+export interface ServerPermissions {
+  manageServer: boolean;
+  manageRoles: boolean;
+  manageChannels: boolean;
+  kickMembers: boolean;
+  banMembers: boolean;
+  createInvites: boolean;
+  changeNickname: boolean;
+  manageNicknames: boolean;
+  manageEmojis: boolean;
+  viewAuditLog: boolean;
+  viewServerInsights: boolean;
+}
+
+export interface CategoryPermissions {
+  viewCategory: boolean;
+  manageCategory: boolean;
+  createChannels: boolean;
+  deleteChannels: boolean;
+}
+
+export interface ChannelPermissions {
+  viewChannel: boolean;
+  sendMessages: boolean;
+  embedLinks: boolean;
+  attachFiles: boolean;
+  addReactions: boolean;
+  useExternalEmoji: boolean;
+  mentionEveryone: boolean;
+  manageMessages: boolean;
+  readMessageHistory: boolean;
+  sendTTSMessages: boolean;
+  useApplicationCommands: boolean;
+  useVoiceActivity: boolean;
+  prioritySpeaker: boolean;
+  stream: boolean;
+  connect: boolean;
+  speak: boolean;
+  video: boolean;
+  muteMembers: boolean;
+  deafenMembers: boolean;
+  moveMembers: boolean;
+}
+
+export interface ServerInvite {
+  code: string;
+  creator: string;
+  createdAt: number;
+  expiresAt?: number;
+  maxUses?: number;
+  uses: number;
+  temporary: boolean;
+}
+
+export interface ModerationSettings {
+  verificationLevel: 'none' | 'low' | 'medium' | 'high' | 'highest';
+  explicitContentFilter: 'disabled' | 'members_without_roles' | 'all_members';
+  defaultMessageNotifications: 'all' | 'only_mentions';
+  antiSpam: boolean;
+  antiRaid: boolean;
+  slowMode: boolean;
+  memberVerification: boolean;
+  memberScreening: boolean;
 }

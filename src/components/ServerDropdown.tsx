@@ -1,7 +1,6 @@
 import React from 'react';
 import { useStore } from '../store/useStore';
 import { 
-  Rocket, 
   Users, 
   Settings, 
   BarChart, 
@@ -13,6 +12,7 @@ import {
   Shield,
   AlertTriangle
 } from 'lucide-react';
+import { LeapFrog } from './icons/LeapFrog';
 
 interface Props {
   isOpen: boolean;
@@ -38,8 +38,8 @@ export const ServerDropdown: React.FC<Props> = ({ isOpen, onClose }) => {
 
   const menuItems = [
     { 
-      label: 'Server Boost', 
-      icon: Rocket, 
+      label: 'Leap+', 
+      icon: LeapFrog, 
       onClick: handleServerBoost,
       className: 'text-[#ff73fa]'
     },

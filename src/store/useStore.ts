@@ -12,6 +12,8 @@ interface Store {
   isAuthenticated: boolean;
   activeTab: 'home' | 'friends' | 'servers' | 'settings' | 'server-settings';
   friendsTab: 'all' | 'pending' | 'blocked' | 'add';
+  setCurrentUser: (user: User | null) => void;
+  updateUserStatus: (userId: string, status: User['status']) => void;
   login: (username: string, password: string) => boolean;
   logout: () => void;
   setActiveTab: (tab: Store['activeTab']) => void;
@@ -19,6 +21,7 @@ interface Store {
   setCurrentServer: (server: Server | null) => void;
   setCurrentChannel: (channel: Channel | null) => void;
   addMessage: (message: Message) => void;
+  addReaction: (messageId: string, emoji: string, userId: string) => void;
   addCategory: (category: Category) => void;
   addChannel: (channel: Channel) => void;
   addServer: (server: Server) => void;
@@ -29,36 +32,19 @@ interface Store {
 const validCredentials = [
   { username: "Test", password: "1234" },
   { username: "Guest", password: "0000" },
-  { username: "Dev", password: "dev123" },
-  { username: "Asterisk", password: "7946" },
-  { username: "Josh", password: "7946" },
-  { username: "Lesa", password: "1945" },
-  { username: "reimon", password: "rsk8" },
-  { username: "User", password: "Pass" },
-  { username: "Spark", password: "Boog" },
-  { username: "Mandiblueyes22", password: "MB22" },
-  { username: "Wolfie", password: "wlf4" },
-  { username: "Hamza", password: "4042" },
-  { username: "Techno", password: "Wambo" },
-  { username: "Trident", password: "Horizon" },
-  { username: "Techy", password: "SnackOps" },
+  { username: "Dev", password: "dev123" }
 ];
-
-
-import type { UserStatus } from '../types';
 
 const defaultUsers: User[] = validCredentials.map(cred => ({
   id: Math.random().toString(36).substring(2),
   name: cred.username,
   isOnline: false,
-  status: 'offline' as UserStatus,
+  status: 'offline',
   customStatus: '',
-  badges: []
+  badges: [],
+  roles: [],
+  leapPlus: false
 }));
-
-
-
-
 
 const defaultServer: Server = {
   id: '1',
@@ -118,6 +104,13 @@ export const useStore = create<Store>((set, get) => ({
   activeTab: 'servers',
   friendsTab: 'all',
 
+  setCurrentUser: (user) => set({ currentUser: user }),
+
+  updateUserStatus: (userId, status) => set(state => ({
+    users: state.users.map(user =>
+      user.id === userId ? { ...user, status, isOnline: status !== 'offline' } : user
+    )
+  })),
 
   setActiveTab: (tab) => set({ activeTab: tab }),
   setFriendsTab: (tab) => set({ friendsTab: tab }),
@@ -126,6 +119,20 @@ export const useStore = create<Store>((set, get) => ({
 
   addMessage: (message) => set(state => ({
     messages: [...state.messages, message]
+  })),
+
+  addReaction: (messageId, emoji, userId) => set(state => ({
+    messages: state.messages.map(msg =>
+      msg.id === messageId
+        ? {
+            ...msg,
+            reactions: [
+              ...(msg.reactions || []),
+              { emoji, count: 1, users: [userId] }
+            ]
+          }
+        : msg
+    )
   })),
 
   addCategory: (category) => set(state => {
@@ -220,11 +227,11 @@ export const useStore = create<Store>((set, get) => ({
     set({
       currentUser: null,
       isAuthenticated: false,
-      users: defaultUsers.map(u => ({ ...u, isOnline: false, status: 'offline' as UserStatus })),
+      users: defaultUsers.map(u => ({ ...u, isOnline: false, status: 'offline' })),
       currentServer: null,
       currentChannel: null,
       activeTab: 'servers',
       friendsTab: 'all'
     });
   }
-}))
+}));

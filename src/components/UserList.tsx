@@ -20,7 +20,7 @@ export const UserList: React.FC = () => {
 
   if (activeTab === 'settings') {
     return (
-      <div className="w-60 bg-[#2f3136] p-4 scrollbar-none">
+      <div className="w-60 bg-[#2f3136] p-4">
         <h3 className="text-gray-400 uppercase text-xs font-semibold mb-4">Settings</h3>
         <div className="space-y-2">
           <button className="w-full text-left text-gray-300 hover:bg-[#36393f] p-2 rounded">
@@ -41,58 +41,63 @@ export const UserList: React.FC = () => {
   }
 
   return (
-    <div className="w-60 bg-[#2f3136] p-4 scrollbar-none">
-      <h3 className="text-gray-400 uppercase text-xs font-semibold mb-4">
-        Online — {onlineUsers.length}
-      </h3>
-      
-      <div className="space-y-2 scrollbar-none">
-        {onlineUsers.map((user) => (
-          <div
-            key={user.id}
-            className="flex items-center space-x-3 p-2 rounded hover:bg-[#36393f] cursor-pointer"
-          >
-            <div className="relative">
-              <div className="w-8 h-8 bg-[#5865F2] rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">
-                  {user.name[0].toUpperCase()}
-                </span>
+    <div className="w-60 bg-[#2f3136] flex flex-col h-screen">
+      <div className="p-4 flex-1 overflow-hidden">
+        <div className="h-full flex flex-col overflow-hidden">
+          {/* Online Users */}
+          <h3 className="text-gray-400 uppercase text-xs font-semibold mb-2">
+            Online — {onlineUsers.length}
+          </h3>
+          <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-[#202225] scrollbar-track-transparent mb-4">
+            {onlineUsers.map((user) => (
+              <div
+                key={user.id}
+                className="flex items-center space-x-3 p-2 rounded hover:bg-[#36393f] cursor-pointer"
+              >
+                <div className="relative flex-shrink-0">
+                  <div className="w-8 h-8 bg-[#5865F2] rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">
+                      {user.name[0].toUpperCase()}
+                    </span>
+                  </div>
+                  <div className={`absolute bottom-0 right-0 w-2 h-2 rounded-full border-2 border-[#2f3136] ${getUserStatusColor(user)}`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-white text-sm font-medium truncate">{user.name}</div>
+                  <div className="text-gray-400 text-xs truncate">
+                    {user.customStatus || (user.status === 'dnd' ? 'Do Not Disturb' : user.status)}
+                  </div>
+                </div>
               </div>
-              <div className={`absolute bottom-0 right-0 w-2 h-2 rounded-full border-2 border-[#2f3136] ${getUserStatusColor(user)}`} />
-            </div>
-            <div className="flex-1">
-              <div className="text-white text-sm font-medium">{user.name}</div>
-              <div className="text-gray-400 text-xs">
-                {user.customStatus || (user.status === 'dnd' ? 'Do Not Disturb' : user.status)}
-              </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <h3 className="text-gray-400 uppercase text-xs font-semibold mt-4 mb-4">
-        Offline — {offlineUsers.length}
-      </h3>
-      
-      <div className="space-y-2 scrollbar-none">
-        {offlineUsers.map((user) => (
-          <div
-            key={user.id}
-            className="flex items-center space-x-3 p-2 rounded hover:bg-[#36393f] cursor-pointer opacity-60"
-          >
-            <div className="w-8 h-8 bg-[#36393f] rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-medium">
-                {user.name[0].toUpperCase()}
-              </span>
-            </div>
-            <div className="flex-1">
-              <div className="text-white text-sm font-medium">{user.name}</div>
-              <div className="text-gray-400 text-xs">Offline</div>
-            </div>
+          {/* Offline Users */}
+          <h3 className="text-gray-400 uppercase text-xs font-semibold mb-2">
+            Offline — {offlineUsers.length}
+          </h3>
+          <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-[#202225] scrollbar-track-transparent">
+            {offlineUsers.map((user) => (
+              <div
+                key={user.id}
+                className="flex items-center space-x-3 p-2 rounded hover:bg-[#36393f] cursor-pointer opacity-60"
+              >
+                <div className="relative flex-shrink-0">
+                  <div className="w-8 h-8 bg-[#36393f] rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">
+                      {user.name[0].toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-white text-sm font-medium truncate">{user.name}</div>
+                  <div className="text-gray-400 text-xs truncate">Offline</div>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
 };
-

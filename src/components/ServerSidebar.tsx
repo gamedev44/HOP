@@ -2,17 +2,37 @@ import React, { useState } from 'react';
 import { useStore } from '../store/useStore';
 import { Plus, Compass } from 'lucide-react';
 import { AddServerModal } from './AddServerModal';
+import type { Server } from '../types';
 
 export const ServerSidebar: React.FC = () => {
-  const { servers, currentServer, setCurrentServer } = useStore();
+  const { servers, currentServer, setCurrentServer, activeTab, setActiveTab } = useStore();
   const [showAddServerModal, setShowAddServerModal] = useState(false);
+
+  const handleHomeClick = () => {
+    if (activeTab === 'home') {
+      setActiveTab('servers'); // Toggle off
+    } else {
+      setActiveTab('home');
+    }
+  };
+
+  const handleServerClick = (server: Server) => {
+    if (currentServer?.id === server.id && activeTab === 'servers') {
+      setActiveTab('home'); // Toggle off
+    } else {
+      setCurrentServer(server);
+      setActiveTab('servers');
+    }
+  };
 
   return (
     <div className="w-[72px] bg-[#202225] h-screen flex flex-col items-center pt-3">
-      {/* App Logo - Home Button */}
+      {/* Home Button */}
       <button 
-        onClick={() => useStore.getState().setActiveTab('home')}
-        className="w-12 h-12 bg-[#36393f] rounded-[16px] flex items-center justify-center hover:rounded-xl transition-all duration-300 group relative mb-2"
+        onClick={handleHomeClick}
+        className={`w-12 h-12 rounded-full flex items-center justify-center hover:rounded-[16px] transition-all duration-300 group relative mb-2 ${
+          activeTab === 'home' ? 'bg-[#5865F2]' : 'bg-[#36393f]'
+        }`}
       >
         <img 
           src="https://gcdnb.pbrd.co/images/ftjHeVLGHIjk.png?o=1" 
@@ -34,13 +54,10 @@ export const ServerSidebar: React.FC = () => {
         {servers.map(server => (
           <button
             key={server.id}
-            onClick={() => {
-              setCurrentServer(server);
-              useStore.getState().setActiveTab('servers');
-            }}
-            className={`w-12 h-12 rounded-[16px] flex items-center justify-center hover:rounded-xl transition-all duration-300 group relative ${
-              currentServer?.id === server.id 
-                ? 'bg-[#5865F2] rounded-xl'
+            onClick={() => handleServerClick(server)}
+            className={`w-12 h-12 rounded-full flex items-center justify-center hover:rounded-[16px] transition-all duration-300 group relative overflow-hidden ${
+              currentServer?.id === server.id && activeTab === 'servers'
+                ? 'bg-[#5865F2]'
                 : 'bg-[#36393f] hover:bg-[#5865F2]'
             }`}
           >
@@ -48,10 +65,10 @@ export const ServerSidebar: React.FC = () => {
               <img 
                 src={server.iconUrl} 
                 alt={server.name}
-                className="w-full h-full rounded-[inherit] object-cover"
+                className="w-full h-full object-cover"
               />
             ) : (
-              <span className="text-white font-semibold">
+              <span className="text-white text-lg font-semibold">
                 {server.name.charAt(0).toUpperCase()}
               </span>
             )}
@@ -65,11 +82,11 @@ export const ServerSidebar: React.FC = () => {
         ))}
       </div>
 
-      {/* Add/Explore Server Button */}
+      {/* Add/Explore Server Buttons */}
       <div className="px-2 pb-3 space-y-2 mt-2">
         <button
           onClick={() => setShowAddServerModal(true)}
-          className="w-12 h-12 rounded-[16px] flex items-center justify-center bg-[#36393f] hover:bg-[#3ba55c] hover:rounded-xl transition-all duration-300 group relative"
+          className="w-12 h-12 rounded-full flex items-center justify-center bg-[#36393f] hover:bg-[#3ba55c] hover:rounded-[16px] transition-all duration-300 group relative"
         >
           <Plus className="w-6 h-6 text-[#3ba55c] group-hover:text-white transition-colors" />
           <div className="pointer-events-none absolute left-[68px] opacity-0 group-hover:opacity-100 transition-all duration-200 z-[60]">
@@ -82,7 +99,7 @@ export const ServerSidebar: React.FC = () => {
 
         <button
           onClick={() => setShowAddServerModal(true)}
-          className="w-12 h-12 rounded-[16px] flex items-center justify-center bg-[#36393f] hover:bg-[#3ba55c] hover:rounded-xl transition-all duration-300 group relative"
+          className="w-12 h-12 rounded-full flex items-center justify-center bg-[#36393f] hover:bg-[#3ba55c] hover:rounded-[16px] transition-all duration-300 group relative"
         >
           <Compass className="w-6 h-6 text-[#3ba55c] group-hover:text-white transition-colors" />
           <div className="pointer-events-none absolute left-[68px] opacity-0 group-hover:opacity-100 transition-all duration-200 z-[60]">

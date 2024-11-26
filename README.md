@@ -31,6 +31,46 @@ By using **HØP**, you are not only connecting with friends and communities but 
 - **Rich Media Support:** Share images, videos, GIFs, and other media files within your conversations. Express yourself with a wide range of multimedia options.
 - **Emojis and Reactions:** Spruce up your conversations with emojis and reactions. Add a touch of fun to your messages by using emojis and reacting to others' messages.
 
+
+## Newly Added & Completed Features to v2.1.0 Alpha
+
+- **Leap+ Integration**: Replaced "Nitro" with "Leap+" throughout the app, including a leaping frog icon for improved visual representation.
+- **File Sharing and Media Uploads**: Integrated UploadThing for secure and user-friendly file sharing in chat.
+- **Server Moderation Tools**: Introduced a robust moderation suite, including:
+  - Role and permissions management.
+  - Content control options for improved server administration.
+
+- **DM Sidebar Expansion**:  
+  - Clicking the "Home" button now shows a dropdown sidebar of recent direct messages.  
+  - The chat header dynamically displays the selected friend's name and avatar during DM conversations.
+
+- **Improved Server Sidebar**:  
+  - Server icons are now circular by default, fully filling the button space with cropped images.  
+  - Transition to slightly rounded squares on hover with smooth animations for better visual feedback.
+
+- **Channel Themes**: Updated channel creation modal to reflect new themed names:
+  - **River**: General discussion categories.
+  - **Hop In**: Voice chat channels.
+  - **Leap of Faith**: Video chat channels.
+  - **Streams**: Streaming channels.
+  - **Burrow**: Private threads or categories.
+
+- **Enhanced UI Layout**:  
+  - Prevented overflow of the friends/members list below the chat bar, maintaining a clean and intuitive design.  
+  - Fixed scrolling behavior to remain within the viewport.
+
+- **Server and Home Button Toggles**:  
+  - Added toggle functionality for the Home button and servers in the sidebar, allowing dynamic navigation.  
+
+This release lays the groundwork for communication, customization, and moderation features, with voice/video functionality in progress and open for contributions.
+
+## coming next and being added ( Still in Active Early Development as of v2.1.0 Alpha )
+
+- **Emoji Reactions**: emoji reactions in messages using emoji-mart, enhancing user interaction within chats.
+
+**Real-time Communication (Early Development)**:  
+  - Voice and video calls using PeerJS have been added but remain in early development.  
+  - Testing is pending due to required debugging of the PostgreSQL NeonDB database, Prisma setup, and Clerk integration. **Help Wanted** for these areas to finalize and test features online.
 ---
 
 ## 💻 Tech Stack
@@ -45,6 +85,11 @@ By using **HØP**, you are not only connecting with friends and communities but 
 - Axios
 - React Query
 - TypeScript
+- p5.JS
+- emoji-mart
+- peerJS
+- Socket.IO
+- Tadpoledb (PostgreSQL Database)
 
 ### **Backend:**
 - Node.js
@@ -102,9 +147,26 @@ cp .env.local.example .env.local
 - Configure the rest of your environment variables accordingly.
 
 ### Install Dependencies 
-To be able to start we must first get npm , node and prisma installed for react dev 
+To begin, ensure you have **npm**, **Node.js**, and **Prisma** installed for React development. Additionally, the following dependencies are required:
 
+1. **Install npm**:
+   ```sh
+   npm install
+   ```
 
+2. **New Dependencies**:
+   - **Socket.IO**: For WebSocket-based real-time communication.
+   - **PeerJS**: For peer-to-peer voice and video calls.
+   - **@prisma/client** and `prisma`: For database interactions with PostgreSQL (NeonDB supported this is Required for our database named tadpoledb to work as its based on neonDB).
+   - **Clerk**: For user authentication and management.
+   - **emoji-mart**: For emoji reactions in messages.
+   - **p5.js**: For video background customization.
+   - **UploadThing**: For file sharing and uploads.
+
+   If not already installed:
+   ```sh
+   npm install socket.io peerjs @prisma/client prisma @clerk/clerk-sdk-node emoji-mart p5 uploadthing
+   ```
 
 ### Testing
 To start a development server:
@@ -113,7 +175,7 @@ npm run dev
 ```
 Visit the app at [http://localhost:3000/](http://localhost:3000/).
 
-Start the database using Prisma Studio:
+To start the database using Prisma Studio:
 ```sh
 npx prisma studio
 ```
@@ -121,6 +183,8 @@ Visit the database at [http://localhost:5555/](http://localhost:5555/).
 
 ### Deployment
 For deployment, use services like **Railway**, **Digital Ocean**, **AWS**, **Google Cloud**, **Azure**, etc.
+
+> Note: Debugging and configuration for PostgreSQL NeonDB, Prisma, and Clerk integration may be required to fully deploy real-time communication features. **Help Wanted** for database and deployment optimization. 
 
 ---
 
@@ -161,4 +225,3 @@ For any questions or collaboration inquiries:
 - GitHub: [https://github.com/gamedev44](https://github.com/gamedev44)
 - Email: [herrell4@gmail.com](mailto:herrell4@gmail.com)
 ```
-

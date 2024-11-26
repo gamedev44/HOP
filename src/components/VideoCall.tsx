@@ -1,93 +1,134 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import P5 from 'react-p5';
 import p5Types from 'p5';
+import { UploadButton } from '@uploadthing/react';
+import { useStore } from '../store/useStore';
+import { CallOverlay } from './CallOverlay';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  peerId?: string;
+  stream?: MediaStream;
+  remoteStream?: MediaStream;
+  peerName: string;
 }
 
-export const VideoCall: React.FC<Props> = ({ isOpen, onClose, peerId }) => {
+export const VideoCall: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  stream,
+  remoteStream,
+  peerName
+}) => {
+  const [backgroundImage, setBackgroundImage] = useState<string>('');
+  const [isMuted, setIsMuted] = useState(false);
+  const [isVideoEnabled, setIsVideoEnabled] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const streamRef = useRef<MediaStream | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
-        .then((stream) => {
-          streamRef.current = stream;
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
-        })
-        .catch((err) => {
-          console.error('Error accessing media devices:', err);
-        });
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
     }
-
-    return () => {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
-      }
-    };
-  }, [isOpen]);
+  }, [stream]);
 
   const setup = (p5: p5Types, canvasParentRef: Element) => {
-    p5.createCanvas(640, 480).parent(canvasParentRef);
-    p5.noStroke();
+    const canvas = p5.createCanvas(640, 480).parent(canvasParentRef);
+    canvas.id('videoCanvas');
+    p5.pixelDensity(1);
   };
 
   const draw = (p5: p5Types) => {
-    p5.background(36, 39, 63);
-    
-    // Draw video feed
-    if (videoRef.current) {
-      p5.image(p5.createVideo([videoRef.current.srcObject as any]), 0, 0);
+    p5.background(0);
+
+    if (videoRef.current && videoRef.current.readyState >= 2) {
+      const video = videoRef.current;
+      p5.loadPixels();
+      
+      // Load background image if set
+      if (backgroundImage) {
+        p5.image(p5.loadImage(backgroundImage), 0, 0, p5.width, p5.height);
+      }
+
+      // Process video frame with chroma key effect
+      const ctx = (canvasRef.current as HTMLCanvasElement).getContext('2d');
+      if (ctx) {
+        ctx.drawImage(video, 0, 0, p5.width, p5.height);
+        const frame = ctx.getImageData(0, 0, p5.width, p5.height);
+        const pixels = frame.data;
+
+        for (let i = 0; i < pixels.length; i += 4) {
+          const r = pixels[i];
+          const g = pixels[i + 1];
+          const b = pixels[i + 2];
+
+          // Green screen effect (adjust threshold as needed)
+          if (g > 100 && r < 100 && b < 100) {
+            pixels[i + 3] = 0; // Make pixel transparent
+          }
+        }
+
+        ctx.putImageData(frame, 0, 0);
+        p5.image(canvasRef.current as HTMLCanvasElement, 0, 0);
+      }
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-[#36393f] rounded-lg shadow-xl p-4 w-[800px]">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-semibold text-white">
-            {peerId ? 'Call with ' + peerId : 'Video Call'}
-          </h3>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-white"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            muted
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <P5 setup={setup} draw={draw} />
-        </div>
-
-        <div className="flex justify-center gap-4 mt-4">
-          <button className="p-3 rounded-full bg-red-500 hover:bg-red-600 text-white">
-            End Call
-          </button>
-          <button className="p-3 rounded-full bg-[#5865F2] hover:bg-[#4752C4] text-white">
-            Toggle Camera
-          </button>
-          <button className="p-3 rounded-full bg-[#5865F2] hover:bg-[#4752C4] text-white">
-            Toggle Mic
-          </button>
+    <CallOverlay
+      isOpen={isOpen}
+      onClose={onClose}
+      stream={stream}
+      remoteStream={remoteStream}
+      isVideo={true}
+      isMuted={isMuted}
+      isVideoEnabled={isVideoEnabled}
+      onToggleMute={() => setIsMuted(!isMuted)}
+      onToggleVideo={() => setIsVideoEnabled(!isVideoEnabled)}
+      peerName={peerName}
+    >
+      <div className="absolute top-4 left-4 z-10">
+        <div className="bg-[#2f3136] rounded-lg p-4 shadow-lg">
+          <h3 className="text-white text-sm font-medium mb-2">Background Settings</h3>
+          <div className="space-y-2">
+            <UploadButton
+              endpoint="backgroundImage"
+              onClientUploadComplete={(res) => {
+                if (res?.[0]) {
+                  setBackgroundImage(res[0].url);
+                }
+              }}
+              onUploadError={(error: Error) => {
+                console.error('Upload error:', error);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Or enter image URL"
+              className="w-full bg-[#40444b] text-white rounded px-3 py-2 text-sm"
+              onChange={(e) => setBackgroundImage(e.target.value)}
+            />
+            <button
+              onClick={() => setBackgroundImage('')}
+              className="w-full bg-red-500 text-white rounded px-3 py-2 text-sm"
+            >
+              Remove Background
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+
+      <div className="hidden">
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
+        />
+        <canvas ref={canvasRef} width="640" height="480" />
+      </div>
+
+      <P5 setup={setup} draw={draw} />
+    </CallOverlay>
   );
 };

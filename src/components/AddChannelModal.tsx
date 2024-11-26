@@ -20,12 +20,12 @@ export const AddChannelModal: React.FC<Props> = ({ categoryId, isOpen, onClose }
 
   if (!isOpen || !currentServer) return null;
 
-  const channelTypes: { id: ChannelType; label: string; icon: typeof Hash }[] = [
-    { id: 'river', label: 'Text Channel', icon: Hash },
-    { id: 'hop', label: 'Voice Channel', icon: Volume2 },
-    { id: 'leap', label: 'Video Channel', icon: Video },
-    { id: 'stream', label: 'Stream Channel', icon: Play },
-    { id: 'burrow', label: 'Private Thread', icon: Lock }
+  const channelTypes: { id: ChannelType; label: string; icon: typeof Hash; description: string }[] = [
+    { id: 'river', label: 'River', icon: Hash, description: 'Categories for organizing discussions' },
+    { id: 'hop', label: 'Hop In', icon: Volume2, description: 'Voice call feature' },
+    { id: 'leap', label: 'Leap of Faith', icon: Video, description: 'Video call feature' },
+    { id: 'stream', label: 'Streams', icon: Play, description: 'Live streaming capabilities' },
+    { id: 'burrow', label: 'Burrow', icon: Lock, description: 'Private categories' }
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -101,14 +101,17 @@ export const AddChannelModal: React.FC<Props> = ({ categoryId, isOpen, onClose }
                       }`}
                     >
                       <Icon className="w-4 h-4" />
-                      <span className="text-sm">{channelType.label}</span>
+                      <div className="text-left">
+                        <div className="text-sm">{channelType.label}</div>
+                        <div className="text-xs opacity-75">{channelType.description}</div>
+                      </div>
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Channel Name */}
+            {/* Rest of the form remains unchanged */}
             <div>
               <label className="block text-sm font-medium text-gray-200 mb-2">
                 CHANNEL NAME
@@ -217,13 +220,13 @@ export const AddChannelModal: React.FC<Props> = ({ categoryId, isOpen, onClose }
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2 text-gray-200 hover:underline focus:outline-none focus:ring-2 focus:ring-[#5865F2] rounded"
+              className="px-4 py-2 text-gray-200 hover:underline"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-[#5865F2] text-white px-4 py-2 rounded hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-[#5865F2] focus:ring-offset-2 focus:ring-offset-[#36393f] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-[#5865F2] text-white px-4 py-2 rounded hover:bg-[#4752C4] disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={!name.trim()}
             >
               Create Channel
