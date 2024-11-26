@@ -162,4 +162,3 @@ For any questions or collaboration inquiries:
 - Email: [herrell4@gmail.com](mailto:herrell4@gmail.com)
 ```
 
-This version highlights the donation and conservation goals, ensuring they are front and center for contributors and users. Let me know if additional changes are needed!
