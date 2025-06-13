@@ -64,6 +64,12 @@
     "prisma": "^5.10.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
-    "vite": "^5.4.2"
+    "vite": "^5.4.2",
+    "eslint": "^9.2.0",
+    "@eslint/js": "^9.2.0",
+    "globals": "^13.27.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "typescript-eslint": "^7.7.0"
   }
 }
