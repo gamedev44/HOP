@@ -1,4 +1,4 @@
-👋 Welcome all Devs!
+# 👋 Welcome all Devs!
 This project contains the foundation for HØP - A Discord Alternative, created by Asterisk.
 
 App Live Version: HØP: Social App
