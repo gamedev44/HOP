@@ -1,8 +1,8 @@
 # **👋 Welcome all Devs!**
 
-This project contains the foundation for **HØP** - A Discord Alternative, created by **Asterisk**.
+## This project contains the foundation for **HØP** - A Discord Alternative, created by **Asterisk**.
 
-**App Live Version:** [HØP: Social App](https://gamedev44.github.io/HOP/)
+# **App Live Version:** [HØP: Social App](https://gamedev44.github.io/HOP/)
 
 I’ve created this application to address the ongoing concerns with Discord's increasing costs, questionable user privacy practices, and overall management. If you believe in making a change, and you have the power, then you have the obligation to do so.
 
@@ -187,7 +187,7 @@ For deployment, use services like **Railway**, **Digital Ocean**, **AWS**, **Goo
 
 ## **💡 Suggestions or Contributions?**
 
-Feel free to leave notes in the issue tracker or on our [GitHub](https://github.com/gamedev44/HOP) page about any new features or changes you’d like to see incorporated.
+Feel free to leave notes in the issue tracker or on our [GitHub](https://github.com/gamedev44/HOP/issues) page about any new features or changes you’d like to see incorporated.
 
 ---
 
