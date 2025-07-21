@@ -6,7 +6,7 @@
 
 I’ve created this application to address the ongoing concerns with Discord's increasing costs, questionable user privacy practices, and overall management. If you believe in making a change, and you have the power, then you have the obligation to do so.
 
-That's why I, **Asterisk**, have started to further develop **HØP**. I’ve already made a very simple yet crude proof of [Concept Web Version](https://hop-socialize.w3spaces.com/) which I am now re-writing as a real-deal fullstack application.
+That's why I, **Asterisk**, have started to further develop **HØP**. I’ve already made a very APP Demo of it before which here I am now re-writing as a real-deal fullstack application what you see is front-end only.
 
 ---
 
